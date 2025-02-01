@@ -1,0 +1,8 @@
+080606 - light black
+00030A - black 
+FFFDFF - white
+F3F6FC - whitish
+FEAB1D - orange/yellow
+D02530 - red
+023FAF - blue
+F8DEC9 - tan

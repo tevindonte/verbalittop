@@ -1,6 +1,6 @@
 // src/components/Nav.jsx
 import React, { useState, useEffect } from "react";
-import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai/index";
+//import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai/index";
 
 import { useNavigate, Link } from "react-router-dom"; // Use Link for client-side routing
 import toast from "react-hot-toast";
@@ -112,7 +112,7 @@ export default function Nav() {
 
       {/* Mobile Navigation Icon */}
       <div onClick={handleNav} className="block md:hidden">
-        {!nav ? <AiOutlineClose size={20} /> : <AiOutlineMenu size={20} />}
+      {!nav ? <span className="text-white text-2xl">✖</span> : <span className="text-white text-2xl">☰</span>}
       </div>
 
       {/* Mobile Menu */}

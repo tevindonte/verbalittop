@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai/index";
+//import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai/index";
 
 import { Link as routelink, NavLink, BrowserRouter} from 'react-router-dom'
 import { Link, Button, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
@@ -45,7 +45,7 @@ export default function Navbar() {
         </ul>
 
         <div onClick={handleNav} className='block md:hidden'>
-            {!nav ? <AiOutlineClose size={20} /> : <AiOutlineMenu size={20} />}
+        {!nav ? <span className="text-white text-2xl">✖</span> : <span className="text-white text-2xl">☰</span>}
         </div>
     <div className={!nav ? 'fixed left-0 top-0 w[60%] h-full border-r border-r-gray-900 bg-[#080606] ease-in-out duration-500' : 'fixed left-[-100%]'}>
             <img src={require('../verbalitlogo/VictoryPath.png')}  width="140" height="140" className='mx-auto'/>

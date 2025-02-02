@@ -9,7 +9,7 @@ export default function FolderShareModal({ folderId, onClose }) {
 
   const generateShareLink = async () => {
     try {
-      const response = await axios.post(`http://localhost:5000/api/folders/share`, {
+      const response = await axios.post(`https://verbalitserver.onrender.com/api/folders/share`, {
         folderId,
         role: shareRole, // Pass the selected role
       });
@@ -22,7 +22,7 @@ export default function FolderShareModal({ folderId, onClose }) {
 
   const sendInvitation = async () => {
     try {
-      await axios.post(`http://localhost:5000/api/folders/invite`, {
+      await axios.post(`https://verbalitserver.onrender.com/api/folders/invite`, {
         folderId,
         email,
         role,

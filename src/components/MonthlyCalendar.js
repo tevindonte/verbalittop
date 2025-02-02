@@ -16,7 +16,7 @@ const MonthlyCalendar = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/users/${userId}/folders`);
+        const response = await axios.get(`https://verbalitserver.onrender.com/api/users/${userId}/folders`);
         setProjects([{ id: null, name: "No Folder/Project" }, ...response.data]); // Add "No Folder/Project" option
         setLoading(false);
       } catch (err) {

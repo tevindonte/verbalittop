@@ -18,7 +18,7 @@ function Register() {
       };
       try {
         toast.loading("Loading...");
-        const response = await axios.post("http://localhost:5000/api/auth/register", userObj);
+        const response = await axios.post("https://verbalitserver.onrender.com/api/auth/register", userObj);
         toast.dismiss();
         if (response.data.success) {
           toast.success(response.data.message);

@@ -17,7 +17,7 @@ export default function ShareMoodboardModal({ moodboardId, onClose }) {
     setMessage("");
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/moodboards/${moodboardId}/share`,
+        `https://verbalitserver.onrender.com/api/moodboards/${moodboardId}/share`,
         { role: shareRole } // Include role in request body
       );
       setShareLink(response.data.shareLink);
@@ -40,7 +40,7 @@ export default function ShareMoodboardModal({ moodboardId, onClose }) {
     setLoading(true);
     setMessage("");
     try {
-      await axios.post(`http://localhost:5000/api/moodboards/${moodboardId}/invite`, {
+      await axios.post(`https://verbalitserver.onrender.com/api/moodboards/${moodboardId}/invite`, {
         email,
         role: inviteRole,
       });

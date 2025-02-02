@@ -18,11 +18,11 @@ export default function Project() {
       try {
         // GET all folders for this user
         const projectsResponse = await axios.get(
-          `http://localhost:5000/api/users/${userId}/folders`
+          `https://verbalitserver.onrender.com/api/users/${userId}/folders`
         );
         // GET all tasks for this user (optional)
         const tasksResponse = await axios.get(
-          `http://localhost:5000/api/users/${userId}/tasks`
+          `https://verbalitserver.onrender.com/api/users/${userId}/tasks`
         );
         setProjects(projectsResponse.data);
         setTasks(tasksResponse.data);
@@ -40,7 +40,7 @@ export default function Project() {
     if (!userId) return;
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/users/${userId}/folders`,
+        `https://verbalitserver.onrender.com/api/users/${userId}/folders`,
         { name }
       );
       setProjects([...projects, response.data]);
@@ -53,7 +53,7 @@ export default function Project() {
   const deleteProject = async (id) => {
     if (!userId) return;
     try {
-      await axios.delete(`http://localhost:5000/api/users/${userId}/folders/${id}`);
+      await axios.delete(`https://verbalitserver.onrender.com/api/users/${userId}/folders/${id}`);
       setProjects(projects.filter((p) => p._id !== id));
       // Also remove tasks associated with that folder from the tasks state
       setTasks(tasks.filter((t) => t.projectId !== id));

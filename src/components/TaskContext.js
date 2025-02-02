@@ -12,7 +12,7 @@ export const TaskProvider = ({ children }) => {
   // Fetch tasks from backend
   const fetchTasks = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/users/${userId}/tasks`);
+      const response = await axios.get(`https://verbalitserver.onrender.com/api/users/${userId}/tasks`);
       setTasks(response.data);
     } catch (error) {
       console.error("Error fetching tasks:", error);
@@ -23,7 +23,7 @@ export const TaskProvider = ({ children }) => {
   const addTask = async (task) => {
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/users/${userId}/folders/${task.projectId || "null"}/tasks`,
+        `https://verbalitserver.onrender.com/api/users/${userId}/folders/${task.projectId || "null"}/tasks`,
         { ...task, userId }
       );
       setTasks((prevTasks) => [...prevTasks, response.data]);
@@ -41,7 +41,7 @@ export const TaskProvider = ({ children }) => {
       }
 
       const response = await axios.put(
-        `http://localhost:5000/api/users/${userId}/tasks/${task._id}`,
+        `https://verbalitserver.onrender.com/api/users/${userId}/tasks/${task._id}`,
         { ...task, userId }
       );
       setTasks((prevTasks) =>
@@ -56,7 +56,7 @@ export const TaskProvider = ({ children }) => {
   const deleteTask = async (taskId, projectId = null) => {
     try {
       await axios.delete(
-        `http://localhost:5000/api/users/${userId}/folders/${projectId || "null"}/tasks/${taskId}`
+        `https://verbalitserver.onrender.com/api/users/${userId}/folders/${projectId || "null"}/tasks/${taskId}`
       );
       setTasks((prevTasks) => prevTasks.filter((task) => task._id !== taskId));
     } catch (error) {

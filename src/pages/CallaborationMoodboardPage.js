@@ -27,13 +27,13 @@ export default function CollaborationMoodboardPage() {
       try {
         // Verify token
         const verifyResp = await axios.get(
-          `http://localhost:5000/api/moodboards/collaborate/${moodboardId}/${token}`
+          `https://verbalitserver.onrender.com/api/moodboards/collaborate/${moodboardId}/${token}`
         );
         setRole(verifyResp.data.role || "viewer");
 
         // Fetch moodboard
         const boardResp = await axios.get(
-          `http://localhost:5000/api/moodboards/${moodboardId}`
+          `https://verbalitserver.onrender.com/api/moodboards/${moodboardId}`
         );
         setMoodboard(boardResp.data);
       } catch (err) {
@@ -52,7 +52,7 @@ export default function CollaborationMoodboardPage() {
   // 2) Initialize Socket.IO AFTER we have moodboard & role (and no error).
   useEffect(() => {
     if (!loading && !errorMessage && moodboardId && token && moodboard) {
-      const socket = io("http://localhost:5000", {
+      const socket = io("https://verbalitserver.onrender.com", {
         transports: ["websocket"],
       });
       socketRef.current = socket;

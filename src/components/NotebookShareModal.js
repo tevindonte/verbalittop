@@ -10,7 +10,7 @@ export default function NotebookShareModal({ pageId, onClose }) {
   const generateShareLink = async () => {
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/collab/share-page/${pageId}`,
+        `https://verbalitserver.onrender.com/api/collab/share-page/${pageId}`,
         { role: shareRole }
       );
       setShareLink(response.data.shareLink);
@@ -23,7 +23,7 @@ export default function NotebookShareModal({ pageId, onClose }) {
   const sendInvitation = async () => {
     try {
       await axios.post(
-        `http://localhost:5000/api/collab/invite-page/${pageId}`,
+        `https://verbalitserver.onrender.com/api/collab/invite-page/${pageId}`,
         { email, role }
       );
       alert("Invitation sent successfully!");

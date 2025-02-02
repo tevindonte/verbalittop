@@ -20,12 +20,12 @@ export default function CollaborationPage() {
       try {
         // Verify token and get role
         const verifyResponse = await axios.get(
-          `http://localhost:5000/api/collab/verify-token/${token}`
+          `https://verbalitserver.onrender.com/api/collab/verify-token/${token}`
         );
         setRole(verifyResponse.data.role);
 
         // Initialize Socket.IO
-        socket = io("http://localhost:5000");
+        socket = io("https://verbalitserver.onrender.com");
         socket.emit("joinPage", pageId);
 
         // Listen for content updates
@@ -35,7 +35,7 @@ export default function CollaborationPage() {
 
         // Fetch initial content
         const contentResponse = await axios.get(
-          `http://localhost:5000/api/notebook/pages/${pageId}`
+          `https://verbalitserver.onrender.com/api/notebook/pages/${pageId}`
         );
         setContent(contentResponse.data.content);
 

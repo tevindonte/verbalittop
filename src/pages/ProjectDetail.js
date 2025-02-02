@@ -26,7 +26,7 @@ export default function ProjectDetail() {
       try {
         // GET single folder by ID for this user
         const response = await axios.get(
-          `http://localhost:5000/api/users/${userId}/folders/${id}`
+          `https://verbalitserver.onrender.com/api/users/${userId}/folders/${id}`
         );
         setProject(response.data);
         setLoadingProject(false);
@@ -45,7 +45,7 @@ export default function ProjectDetail() {
       try {
         // GET tasks for this folder
         const response = await axios.get(
-          `http://localhost:5000/api/users/${userId}/folders/${id}/tasks`
+          `https://verbalitserver.onrender.com/api/users/${userId}/folders/${id}/tasks`
         );
         setTasks(response.data);
         setLoadingTasks(false);
@@ -61,7 +61,7 @@ export default function ProjectDetail() {
   const addTask = async (text, start, end) => {
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/users/${userId}/folders/${id}/tasks`,
+        `https://verbalitserver.onrender.com/api/users/${userId}/folders/${id}/tasks`,
         { text, start, end }
       );
       setTasks([...tasks, response.data]);
@@ -75,7 +75,7 @@ export default function ProjectDetail() {
     try {
       // We update the task via /api/users/:userId/tasks/:taskId
       const response = await axios.put(
-        `http://localhost:5000/api/users/${userId}/tasks/${updatedTask._id}`,
+        `https://verbalitserver.onrender.com/api/users/${userId}/tasks/${updatedTask._id}`,
         updatedTask
       );
       setTasks((prev) =>
@@ -91,7 +91,7 @@ export default function ProjectDetail() {
     try {
       // /api/users/:userId/folders/:folderId/tasks/:taskId
       await axios.delete(
-        `http://localhost:5000/api/users/${userId}/folders/${id}/tasks/${taskId}`
+        `https://verbalitserver.onrender.com/api/users/${userId}/folders/${id}/tasks/${taskId}`
       );
       setTasks(tasks.filter((t) => t._id !== taskId));
     } catch (err) {

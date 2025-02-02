@@ -15,7 +15,7 @@ export default function Nav() {
   const getUserData = async () => {
     try {
       // Make a GET request to /api/auth/me with credentials to include cookies
-      const response = await axios.get("http://localhost:5000/api/auth/me", {
+      const response = await axios.get("https://verbalitserver.onrender.com/api/auth/me", {
         withCredentials: true, // Important: allows cookies to be sent
       });
 
@@ -43,7 +43,7 @@ export default function Nav() {
   // Handle user logout
   const handleLogout = async () => {
     try {
-      await axios.post("http://localhost:5000/api/auth/logout", {}, {
+      await axios.post("https://verbalitserver.onrender.com/api/auth/logout", {}, {
         withCredentials: true, // Ensure cookies are sent
       });
       toast.success("Logged out successfully");

@@ -53,7 +53,7 @@ function Home() {
   // Fetch user tier (assuming you intend to use it somewhere)
   const fetchUserTier = async (userId) => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/get-user-tier/${userId}`); // Changed port to 5000 to match backend
+      const response = await axios.get(`https://verbalitserver.onrender.com/api/get-user-tier/${userId}`); // Changed port to 5000 to match backend
       console.log("User tier fetched:", response.data);
       setUserInfo(response.data); // Update state if needed
       return response.data;

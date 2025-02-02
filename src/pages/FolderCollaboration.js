@@ -58,7 +58,7 @@ export default function FolderCollaboration() {
   const addTask = async (text, start, end, backColor) => {
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/collab/folders/${folderId}/tasks`,
+        `https://verbalitserver.onrender.com/api/collab/folders/${folderId}/tasks`,
         { text, start, end, backColor }, // No userId is sent here.
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -75,7 +75,7 @@ export default function FolderCollaboration() {
   const updateTask = async (updatedTask) => {
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/tasks/${updatedTask._id}`,
+        `https://verbalitserver.onrender.com/api/tasks/${updatedTask._id}`,
         updatedTask,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -94,7 +94,7 @@ export default function FolderCollaboration() {
   const deleteTask = async (taskId) => {
     try {
       await axios.delete(
-        `http://localhost:5000/api/folders/${folderId}/tasks/${taskId}`,
+        `https://verbalitserver.onrender.com/api/folders/${folderId}/tasks/${taskId}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setTasks(tasks.filter((t) => t._id !== taskId));

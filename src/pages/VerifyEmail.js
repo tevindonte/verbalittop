@@ -11,7 +11,7 @@ function VerifyEmail() {
     try {
       toast.loading("Verifying email...");
       const response = await axios.post(
-        "http://localhost:5000/api/auth/verifyemail",
+        "https://verbalitserver.onrender.com/api/auth/verifyemail",
         { token: params.token } // Pass the token in the request body
       );
 

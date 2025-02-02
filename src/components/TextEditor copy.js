@@ -19,7 +19,7 @@ const TextEditor = ({ content, onChange, pageId }) => {
   // Initialize Socket.IO connection and set up event listeners
   useEffect(() => {
     // Initialize Socket.IO client
-    socketRef.current = io("http://localhost:5000"); // Update with your backend URL if different
+    socketRef.current = io("https://verbalitserver.onrender.com"); // Update with your backend URL if different
 
     // Join the specific room based on pageId
     if (pageId) {
@@ -116,7 +116,7 @@ const TextEditor = ({ content, onChange, pageId }) => {
     formData.append("pageId", pageId); // Optionally send pageId to associate transcription
 
     try {
-      const response = await axios.post("http://localhost:5000/api/speech-to-text", formData, {
+      const response = await axios.post("https://verbalitserver.onrender.com/api/speech-to-text", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

@@ -17,7 +17,7 @@ const SharedPage = () => {
   useEffect(() => {
     const fetchPageAccess = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/share/access/${pageId}/${token}`);
+        const response = await axios.get(`https://verbalitserver.onrender.com/api/share/access/${pageId}/${token}`);
         if (response.data.accessType === "link") {
           setRole(response.data.role);
           setIsAuthorized(true);
@@ -38,7 +38,7 @@ const SharedPage = () => {
   useEffect(() => {
     if (isAuthorized) {
       // Initialize Socket.IO connection
-      socket = io("http://localhost:5000");
+      socket = io("https://verbalitserver.onrender.com");
 
       socket.emit("joinPage", { pageId, token });
 
@@ -57,7 +57,7 @@ const SharedPage = () => {
   useEffect(() => {
     const fetchPage = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/notebook/pages/${pageId}`);
+        const response = await axios.get(`https://verbalitserver.onrender.com/api/notebook/pages/${pageId}`);
         setPage(response.data);
       } catch (error) {
         console.error("Error fetching shared page:", error);

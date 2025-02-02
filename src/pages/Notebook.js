@@ -48,7 +48,7 @@ useEffect(() => {
       try {
         console.log("Fetching pages...");
         const response = await axios.get(
-          `http://localhost:5000/api/notebook/${userId}/pages`
+          `https://verbalitserver.onrender.com/api/notebook/${userId}/pages`
         );
         console.log("Pages fetched:", response.data);
         setPages(response.data);
@@ -63,7 +63,7 @@ useEffect(() => {
     const fetchFolders = async () => {
       try {
         console.log("Fetching folders...");
-        const response = await axios.get(`http://localhost:5000/api/users/${userId}/folders`);
+        const response = await axios.get(`https://verbalitserver.onrender.com/api/users/${userId}/folders`);
         console.log("Folders fetched:", response.data);
         setFolders([{ _id: null, name: "No Folder" }, ...response.data]);
       } catch (error) {
@@ -81,7 +81,7 @@ useEffect(() => {
     const newPage = { name: `Page ${pages.length + 1}`, content: "" };
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/notebook/${userId}/pages`,
+        `https://verbalitserver.onrender.com/api/notebook/${userId}/pages`,
         newPage
       );
       setPages([...pages, response.data]);
@@ -97,7 +97,7 @@ useEffect(() => {
 
   const handleDeletePage = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/notebook/pages/${id}`);
+      await axios.delete(`https://verbalitserver.onrender.com/api/notebook/pages/${id}`);
       const updatedPages = pages.filter((page) => page._id !== id);
       setPages(updatedPages);
       if (currentPage === id && updatedPages.length > 0) {
@@ -113,7 +113,7 @@ useEffect(() => {
   const handleUpdateContent = async (id, content) => {
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/notebook/pages/${id}`,
+        `https://verbalitserver.onrender.com/api/notebook/pages/${id}`,
         { content }
       );
       setPages(pages.map((page) => (page._id === id ? response.data : page)));
@@ -125,7 +125,7 @@ useEffect(() => {
   const handleUpdateFolder = async (pageId, newFolderId) => {
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/notebook/pages/${pageId}/link-folder`,
+        `https://verbalitserver.onrender.com/api/notebook/pages/${pageId}/link-folder`,
         { folderId: newFolderId }
       );
       setPages(pages.map((page) => 

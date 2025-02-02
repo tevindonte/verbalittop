@@ -20,9 +20,9 @@ export default function ResourcesList({ folderId, resources = [], role, onAddFil
     try {
       // Use Promise.allSettled to fetch resources, notebook pages, and moodboards
       const [resourceResult, pageResult, moodboardResult] = await Promise.allSettled([
-        axios.get(`http://localhost:5000/api/folders/${folderId}/resources`),
-        axios.get(`http://localhost:5000/api/notebook/pages/folder/${folderId}`),
-        axios.get(`http://localhost:5000/api/folders/${folderId}/moodboards`), // Added moodboards API call
+        axios.get(`https://verbalitserver.onrender.com/api/folders/${folderId}/resources`),
+        axios.get(`https://verbalitserver.onrender.com/api/notebook/pages/folder/${folderId}`),
+        axios.get(`https://verbalitserver.onrender.com/api/folders/${folderId}/moodboards`), // Added moodboards API call
       ]);
 
       const fetchedResources =
@@ -77,7 +77,7 @@ export default function ResourcesList({ folderId, resources = [], role, onAddFil
       return;
     }
     try {
-      await axios.delete(`http://localhost:5000/api/resources/${fileId}`);
+      await axios.delete(`https://verbalitserver.onrender.com/api/resources/${fileId}`);
       if (onAddFile && typeof onAddFile === "function") {
         onAddFile(resources.filter((resource) => resource._id !== fileId));
       }
@@ -95,7 +95,7 @@ export default function ResourcesList({ folderId, resources = [], role, onAddFil
     const previewUrl =
       resource.contentType === "notebook/page" || resource.contentType === "moodboard"
         ? null // Notebook pages and moodboards do not have a preview URL
-        : `http://localhost:5000/api/folders/${folderId}/resources/${resource.filename}`;
+        : `https://verbalitserver.onrender.com/api/folders/${folderId}/resources/${resource.filename}`;
 
     if (resource.contentType.startsWith("image")) {
       return (
@@ -207,7 +207,7 @@ export default function ResourcesList({ folderId, resources = [], role, onAddFil
                         resource.contentType !== "notebook/page" &&
                         resource.contentType !== "moodboard" &&
                         window.open(
-                          `http://localhost:5000/api/folders/${folderId}/resources/${resource.filename}`,
+                          `https://verbalitserver.onrender.com/api/folders/${folderId}/resources/${resource.filename}`,
                           "_blank"
                         )
                       }

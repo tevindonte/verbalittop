@@ -32,7 +32,7 @@ function App() {
   return (
     <div>
       <AuthProvider>
-      
+
         <AnimatedCursor
           innerSize={13}
           outerSize={13}
@@ -64,7 +64,7 @@ function App() {
                   element={
                     <ProtectedRoutes>
                       <UserProvider>
-                        
+
                         <Home />
                       </UserProvider>
                     </ProtectedRoutes>
@@ -161,19 +161,19 @@ function App() {
                   element={
                     <PublicRoutes>
                       <UserProvider>
-                      <FolderCollaboration />
+                        <FolderCollaboration />
                       </UserProvider>
                     </PublicRoutes>
                   }
                 />
                 <Route
-        path="/moodboards/collaborate/:moodboardId/:token"
-        element={
-            <PublicRoutes>
-                <CollaborationMoodboardPage />
-            </PublicRoutes>
-        }
-    />
+                  path="/moodboards/collaborate/:moodboardId/:token"
+                  element={
+                    <PublicRoutes>
+                      <CollaborationMoodboardPage />
+                    </PublicRoutes>
+                  }
+                />
                 <Route
                   path="/welcome"
                   element={
@@ -251,7 +251,7 @@ function App() {
             </TaskProvider>
           </ProjectProvider>
         </BrowserRouter>
-        
+
       </AuthProvider>
     </div>
   );

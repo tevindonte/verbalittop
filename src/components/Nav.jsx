@@ -1,6 +1,7 @@
 // Nav.jsx
 import React, { useState, useEffect } from "react";
-import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
+import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai/index";
+
 import { useNavigate, Link } from "react-router-dom"; // Use Link for client-side routing
 import toast from "react-hot-toast";
 import axios from "axios";

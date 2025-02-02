@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
-import {AiOutlineClose, AiOutlineMenu} from 'react-icons/ai'
+import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai/index";
+
 import { Link as routelink, NavLink, BrowserRouter} from 'react-router-dom'
 import { Link, Button, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 import signup from '../pages/Register'

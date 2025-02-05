@@ -11,7 +11,7 @@ function ResetPassword() {
   const resetPassword = async () => {
     try {
       toast.loading();
-      const response = await axios.post("http://localhost:3000/api/auth/reset-password", {
+      const response = await axios.post("https://verbalitserver.onrender.com/api/auth/reset-password", {
         password,
         token: params.token,
       });

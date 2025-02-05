@@ -35,7 +35,7 @@ export default function FileUploader({ folderId, onAddFile }) {
       formData.append("folderId", folderId); // Pass folderId explicitly if needed
 
       // Make POST request to upload endpoint
-      const response = await axios.post(`/gridfs-upload/${folderId}`, formData, {
+      const response = await axios.post(`https://verbalitserver.onrender.com/gridfs-upload/${folderId}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 

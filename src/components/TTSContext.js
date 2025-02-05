@@ -15,7 +15,7 @@ export function TTSProvider({ children }) {
     if (!hasFetchedVoices) {
       setIsFetching(true);
       axios
-        .get("/api/tts/voices")
+        .get("https://verbalitserver.onrender.com/api/tts/voices")
         .then((response) => {
           setVoices(response.data);
           setHasFetchedVoices(true);

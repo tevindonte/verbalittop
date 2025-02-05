@@ -46,7 +46,7 @@ export default function AudioRecorder({ folderId, onAddFile }) {
     formData.append("file", blob, `recording-${Date.now()}.webm`);
   
     axios
-      .post(`/gridfs-upload/${folderId}`, formData, {
+      .post(`https://verbalitserver.onrender.com/gridfs-upload/${folderId}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then((response) => {

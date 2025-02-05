@@ -109,7 +109,7 @@ export default function Membership () {
       if (!userId) return; // Ensure userId is present
   
       try {
-        const response = await fetch(`/get-subscription?userId=${userId}`);
+        const response = await fetch(`https://verbalitserver.onrender.com/get-subscription?userId=${userId}`);
         if (!response.ok) {
           throw new Error(`Failed to fetch subscription. Status: ${response.status}`);
         }
@@ -138,7 +138,7 @@ export default function Membership () {
       )}&user_name=${encodeURIComponent(userName)}`;
     } else {
       // Dynamic Checkout Session
-      const response = await fetch("/create-checkout-session", {
+      const response = await fetch("https://verbalitserver.onrender.com/create-checkout-session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId, priceId, userEmail, userName }),
@@ -158,7 +158,7 @@ export default function Membership () {
 
   const cancelSubscription = async (subscriptionId) => {
     try {
-      const response = await fetch("/cancel-subscription", {
+      const response = await fetch("https://verbalitserver.onrender.com/cancel-subscription", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

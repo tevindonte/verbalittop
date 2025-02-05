@@ -12,7 +12,7 @@ const UploadedSpeech = () => {
 
   const fetchSubmissions = async () => {
     try {
-      const response = await axios.get(`/get-files?userId=${userId}`); // Include userId in the request
+      const response = await axios.get(`https://verbalitserver.onrender.com/get-files?userId=${userId}`); // Include userId in the request
       console.log("Fetched submissions:", response.data.data);
       setSubmissions(Array.isArray(response.data.data) ? response.data.data : []);
     } catch (error) {
@@ -24,7 +24,7 @@ const UploadedSpeech = () => {
   const handlePlay = async (submission) => {
     if (submission.type === "upload") {
       try {
-        const response = await axios.get(`/api/get-text/${submission._id}?userId=${userId}`); // Include userId in the request
+        const response = await axios.get(`https://verbalitserver.onrender.com/api/get-text/${submission._id}?userId=${userId}`); // Include userId in the request
         const { text } = response.data;
 
         console.log("Fetched text from backend:", text); // Log the fetched text

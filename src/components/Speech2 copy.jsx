@@ -36,7 +36,7 @@ const Speech2 = () => {
 
     try {
       const response = await axios.post(
-        "/api/tts/convert",
+        "https://verbalitserver.onrender.com/api/tts/convert",
         { text, voice: selectedVoice, userId },
         { responseType: "blob" }
       );
@@ -58,6 +58,7 @@ const Speech2 = () => {
       return;
     }
     try {
+  // Playback-related state
       const response = await axios.post("/api/paste-text", { name, text });
       if (response.data.status === "ok") {
         alert(`Text "${name}" saved successfully!`);

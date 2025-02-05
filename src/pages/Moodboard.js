@@ -43,7 +43,7 @@ useEffect(() => {
   useEffect(() => {
     const fetchBoards = async () => {
       try {
-        const response = await axios.get(`/api/boards/${userId}`);
+        const response = await axios.get(`https://verbalitserver.onrender.com/api/boards/${userId}`);
         setBoards(response.data);
         if (response.data.length > 0) setActiveBoardId(response.data[0]._id); // Set active board if available
       } catch (error) {
@@ -54,7 +54,7 @@ useEffect(() => {
     const fetchFolders = async () => {
       try {
         console.log("Fetching folders...");
-        const response = await axios.get(`/api/users/${userId}/folders`);
+        const response = await axios.get(`https://verbalitserver.onrender.com/api/users/${userId}/folders`);
         console.log("Folders fetched:", response.data);
         setFolders([{ _id: null, name: "No Folder" }, ...response.data]); // Add "No Folder" option
       } catch (error) {
@@ -75,7 +75,7 @@ useEffect(() => {
       elements: [],
     };
     try {
-      const response = await axios.post(`/api/boards/${userId}`, newBoard);
+      const response = await axios.post(`https://verbalitserver.onrender.com/api/boards/${userId}`, newBoard);
       setBoards((prev) => [...prev, response.data]);
       setActiveBoardId(response.data._id);
     } catch (error) {
@@ -86,7 +86,7 @@ useEffect(() => {
   // Rename an existing board
   const renameBoard = async (id, newName) => {
     try {
-      const response = await axios.put(`/api/boards/${userId}/${id}`, { name: newName });
+      const response = await axios.put(`https://verbalitserver.onrender.com/api/boards/${userId}/${id}`, { name: newName });
       setBoards((prev) =>
         prev.map((board) =>
           board._id === id ? { ...board, name: response.data.name } : board
@@ -100,7 +100,7 @@ useEffect(() => {
   // Delete a board
   const deleteBoard = async (id) => {
     try {
-      const response = await axios.delete(`/api/boards/${userId}/${id}`);
+      const response = await axios.delete(`https://verbalitserver.onrender.com/api/boards/${userId}/${id}`);
       console.log(response.data.message);
       setBoards((prev) => prev.filter((board) => board._id !== id));
       if (activeBoardId === id && boards.length > 1) {
@@ -127,7 +127,7 @@ useEffect(() => {
       const sanitizedElements = updatedElements.map(({ _id, ...rest }) => rest);
 
       try {
-        const response = await axios.put(`/api/boards/${userId}/${activeBoardId}`, {
+        const response = await axios.put(`https://verbalitserver.onrender.com/api/boards/${userId}/${activeBoardId}`, {
           elements: sanitizedElements,
         }); // Send only elements
         setBoards((prev) =>
@@ -148,7 +148,7 @@ useEffect(() => {
   const handleFolderChange = async (boardId, folderId) => {
     try {
       // Make the PUT request to link the board to the selected folder
-      const response = await axios.put(`/api/boards/${boardId}/link-folder`, {
+      const response = await axios.put(`https://verbalitserver.onrender.com/api/boards/${boardId}/link-folder`, {
         folderId: folderId || null, // Send null to unlink
       });
 

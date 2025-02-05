@@ -27,6 +27,7 @@ import React from 'react';
 import CollaborationPage from "./pages/CollaboratePage";
 import FolderCollaboration from "./pages/FolderCollaboration";
 import CollaborationMoodboardPage from "./pages/CallaborationMoodboardPage";
+import Uplift from "./pages/Uplift"
 
 function App() {
   return (
@@ -76,6 +77,16 @@ function App() {
                     <ProtectedRoutes>
                       <UserProvider>
                         <Moodboard />
+                      </UserProvider>
+                    </ProtectedRoutes>
+                  }
+                />
+                <Route
+                  path="/uplift"
+                  element={
+                    <ProtectedRoutes>
+                      <UserProvider>
+                        <Uplift />
                       </UserProvider>
                     </ProtectedRoutes>
                   }

@@ -22,6 +22,20 @@ export default function Moodboard() {
   const [embedType, setEmbedType] = useState("board");
 
   // -------------------------------
+  // States for Google Reuse Image Search Panel
+  // -------------------------------
+  const [showGooglePanel, setShowGooglePanel] = useState(false);
+  const [googleQuery, setGoogleQuery] = useState("");
+  const [googleResults, setGoogleResults] = useState([]);
+
+  // -------------------------------
+  // States for Unsplash Stock Images Panel
+  // -------------------------------
+  const [showUnsplashPanel, setShowUnsplashPanel] = useState(false);
+  const [unsplashQuery, setUnsplashQuery] = useState("");
+  const [unsplashResults, setUnsplashResults] = useState([]);
+
+  // -------------------------------
   // 1) Load Chatbot Scripts
   // -------------------------------
   useEffect(() => {
@@ -177,9 +191,7 @@ export default function Moodboard() {
       try {
         const response = await axios.put(
           `https://verbalitserver.onrender.com/api/boards/${userId}/${activeBoardId}`,
-          {
-            elements: sanitizedElements,
-          }
+          { elements: sanitizedElements }
         );
         setBoards((prev) =>
           prev.map((board) =>
@@ -202,9 +214,7 @@ export default function Moodboard() {
     try {
       const response = await axios.put(
         `https://verbalitserver.onrender.com/api/boards/${boardId}/link-folder`,
-        {
-          folderId: folderId || null,
-        }
+        { folderId: folderId || null }
       );
       setBoards((prevBoards) =>
         prevBoards.map((board) =>
@@ -221,8 +231,42 @@ export default function Moodboard() {
   };
 
   // -------------------------------
-  // 8) Render
+  // 8) Google Image Search Functionality (using backend proxy)
   // -------------------------------
+  const searchGoogleImages = async () => {
+    if (!googleQuery) return;
+    try {
+      const response = await axios.get("/api/google-images", {
+        params: { q: googleQuery },
+      });
+      setGoogleResults(response.data.items || []);
+    } catch (error) {
+      console.error("Error searching Google images:", error);
+    }
+  };
+
+  // -------------------------------
+  // 9) Unsplash Stock Images Search Functionality (using backend proxy)
+  // -------------------------------
+  const searchUnsplashImages = async () => {
+    if (!unsplashQuery) return;
+    try {
+      const response = await axios.get("/api/unsplash-photos", {
+        params: { query: unsplashQuery },
+      });
+      // Unsplash returns a structure with { total, total_pages, results: [...] }
+      setUnsplashResults(response.data.results || []);
+    } catch (error) {
+      console.error("Error searching Unsplash images:", error);
+    }
+  };
+
+  // -------------------------------
+  // 10) Render
+  // -------------------------------
+  // Determine if any side panel is open.
+  const sidePanelOpen = showPinterestPanel || showGooglePanel || showUnsplashPanel;
+
   return (
     <div>
       <Nav />
@@ -237,11 +281,7 @@ export default function Moodboard() {
                 onClick={() => setShowShareModal(true)}
                 className="px-2 py-1 bg-green-500 text-white rounded"
                 disabled={!activeBoardId}
-                title={
-                  activeBoardId
-                    ? "Share Selected Moodboard"
-                    : "Select a Moodboard to Share"
-                }
+                title={activeBoardId ? "Share Selected Moodboard" : "Select a Moodboard to Share"}
               >
                 Share
               </button>
@@ -257,16 +297,11 @@ export default function Moodboard() {
             {boards.map((board) => (
               <li
                 key={board._id}
-                className={`p-2 rounded cursor-pointer ${
-                  activeBoardId === board._id ? "bg-gray-200" : ""
-                }`}
+                className={`p-2 rounded cursor-pointer ${activeBoardId === board._id ? "bg-gray-200" : ""}`}
               >
                 <div className="flex flex-col">
                   <div className="flex justify-between items-center">
-                    <span
-                      onClick={() => setActiveBoardId(board._id)}
-                      className="flex-1"
-                    >
+                    <span onClick={() => setActiveBoardId(board._id)} className="flex-1">
                       {board.name}
                     </span>
                     <button
@@ -302,10 +337,7 @@ export default function Moodboard() {
                     aria-label={`Select folder for ${board.name}`}
                   >
                     {folders.map((folder) => (
-                      <option
-                        key={folder._id || "no-folder"}
-                        value={folder._id || ""}
-                      >
+                      <option key={folder._id || "no-folder"} value={folder._id || ""}>
                         {folder.name || "No Folder"}
                       </option>
                     ))}
@@ -314,24 +346,51 @@ export default function Moodboard() {
               </li>
             ))}
           </ul>
-          <div className="mt-4">
+          {/* Toggle Buttons for Panels */}
+          <div className="mt-4 space-y-2">
             <button
-              onClick={() => setShowPinterestPanel((prev) => !prev)}
-              className="px-3 py-2 bg-pink-500 text-white rounded"
+              onClick={() => {
+                setShowPinterestPanel((prev) => !prev);
+                if (!showPinterestPanel) {
+                  setShowGooglePanel(false);
+                  setShowUnsplashPanel(false);
+                }
+              }}
+              className="w-full px-3 py-2 bg-pink-500 text-white rounded"
             >
               {showPinterestPanel ? "Close Pinterest" : "Open Pinterest"}
+            </button>
+            <button
+              onClick={() => {
+                setShowGooglePanel((prev) => !prev);
+                if (!showGooglePanel) {
+                  setShowPinterestPanel(false);
+                  setShowUnsplashPanel(false);
+                }
+              }}
+              className="w-full px-3 py-2 bg-indigo-500 text-white rounded"
+            >
+              {showGooglePanel ? "Close Google Search" : "Open Google Search"}
+            </button>
+            <button
+              onClick={() => {
+                setShowUnsplashPanel((prev) => !prev);
+                if (!showUnsplashPanel) {
+                  setShowPinterestPanel(false);
+                  setShowGooglePanel(false);
+                }
+              }}
+              className="w-full px-3 py-2 bg-green-600 text-white rounded"
+            >
+              {showUnsplashPanel ? "Close Stock Images" : "Open Stock Images"}
             </button>
           </div>
         </div>
 
-        {/* =============== MAIN BOARD AREA + PINTEREST PANEL =============== */}
+        {/* =============== MAIN BOARD AREA + SIDE PANEL =============== */}
         <div className="flex flex-1 flex-row">
-          {/* Board Area: Adjust width when the Pinterest panel is open */}
-          <div
-            className={`transition-all duration-300 ${
-              showPinterestPanel ? "w-2/3" : "w-full"
-            }`}
-          >
+          {/* Board Area: Adjust width when a side panel is open */}
+          <div className={`transition-all duration-300 ${sidePanelOpen ? "w-2/3" : "w-full"}`}>
             {activeBoard ? (
               <Board
                 userId={userId}
@@ -346,79 +405,148 @@ export default function Moodboard() {
             )}
           </div>
 
-          {/* Pinterest Side Panel */}
-          {showPinterestPanel && (
-            <div
-              className="w-1/3 border-l border-gray-300 p-4 overflow-y-auto"
-              style={{ maxHeight: "100%" }}
-            >
-              {/* Title */}
-              <h3 className="text-lg font-semibold mb-2">
-                Pinterest {embedType === "board" ? "Board" : "Profile"} Embed
-              </h3>
-              {/* Embed Type Selector */}
-              <label className="block mb-2">
-                <span className="mr-2 font-medium text-sm text-gray-700">
-                  Embed Type:
-                </span>
-                <select
-                  value={embedType}
-                  onChange={(e) => setEmbedType(e.target.value)}
-                  className="border p-1 text-sm rounded"
-                >
-                  <option value="board">Board</option>
-                  <option value="profile">Profile</option>
-                </select>
-              </label>
-              {/* URL Input */}
-              <input
-                type="text"
-                placeholder={
-                  embedType === "board"
-                    ? "Enter your Pinterest board URL"
-                    : "Enter your Pinterest profile URL"
-                }
-                className="border p-1 w-full mb-2"
-                value={pinterestUrl}
-                onChange={(e) => setPinterestUrl(e.target.value)}
-              />
-              {/* Embed */}
-              {pinterestUrl && (
-                <div key={pinterestUrl} className="my-4">
-                  {embedType === "board" ? (
-                    <a
-                      data-pin-do="embedBoard"
-                      data-pin-board-width="405"
-                      data-pin-scale-height="900"
-                      data-pin-scale-width="190"
-                      href={pinterestUrl}
+          {/* Side Panel */}
+          {sidePanelOpen && (
+            <>
+              {showPinterestPanel && (
+                <div className="w-1/3 border-l border-gray-300 p-4 overflow-y-auto" style={{ maxHeight: "100%" }}>
+                  <h3 className="text-lg font-semibold mb-2">
+                    Pinterest {embedType === "board" ? "Board" : "Profile"} Embed
+                  </h3>
+                  <label className="block mb-2">
+                    <span className="mr-2 font-medium text-sm text-gray-700">Embed Type:</span>
+                    <select
+                      value={embedType}
+                      onChange={(e) => setEmbedType(e.target.value)}
+                      className="border p-1 text-sm rounded"
                     >
-                      Loading Pinterest board...
-                    </a>
-                  ) : (
-                    <a
-                      data-pin-do="embedUser"
-                      data-pin-board-width="400"
-                      data-pin-scale-height="240"
-                      data-pin-scale-width="80"
-                      href={pinterestUrl}
-                    >
-                      Loading Pinterest profile...
-                    </a>
+                      <option value="board">Board</option>
+                      <option value="profile">Profile</option>
+                    </select>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder={
+                      embedType === "board"
+                        ? "Enter your Pinterest board URL"
+                        : "Enter your Pinterest profile URL"
+                    }
+                    className="border p-1 w-full mb-2"
+                    value={pinterestUrl}
+                    onChange={(e) => setPinterestUrl(e.target.value)}
+                  />
+                  {pinterestUrl && (
+                    <div key={pinterestUrl} className="my-4">
+                      {embedType === "board" ? (
+                        <a
+                          data-pin-do="embedBoard"
+                          data-pin-board-width="405"
+                          data-pin-scale-height="900"
+                          data-pin-scale-width="190"
+                          href={pinterestUrl}
+                        >
+                          Loading Pinterest board...
+                        </a>
+                      ) : (
+                        <a
+                          data-pin-do="embedUser"
+                          data-pin-board-width="400"
+                          data-pin-scale-height="240"
+                          data-pin-scale-width="80"
+                          href={pinterestUrl}
+                        >
+                          Loading Pinterest profile...
+                        </a>
+                      )}
+                    </div>
                   )}
+                  <p className="text-sm text-gray-500">
+                    <strong>Note:</strong> Make sure you enter a valid Pinterest{" "}
+                    {embedType === "board" ? "board" : "profile"} URL, for example:
+                    <br />
+                    {embedType === "board" ? (
+                      <em>https://www.pinterest.com/USERNAME/BOARD_NAME/</em>
+                    ) : (
+                      <em>https://www.pinterest.com/USERNAME/</em>
+                    )}
+                  </p>
                 </div>
               )}
-              <p className="text-sm text-gray-500">
-                <strong>Note:</strong> Make sure you enter a valid Pinterest{" "}
-                {embedType === "board" ? "board" : "profile"} URL, for example:
-                <br />
-                {embedType === "board" ? (
-                  <em>https://www.pinterest.com/USERNAME/BOARD_NAME/</em>
-                ) : (
-                  <em>https://www.pinterest.com/USERNAME/</em>
-                )}
-              </p>
-            </div>
+
+              {showGooglePanel && (
+                <div className="w-1/3 border-l border-gray-300 p-4 overflow-y-auto" style={{ maxHeight: "100%" }}>
+                  <h3 className="text-lg font-semibold mb-2">Google Reuse Image Search</h3>
+                  <input
+                    type="text"
+                    placeholder="Enter search query..."
+                    className="border p-1 w-full mb-2"
+                    value={googleQuery}
+                    onChange={(e) => setGoogleQuery(e.target.value)}
+                  />
+                  <button
+                    onClick={searchGoogleImages}
+                    className="px-3 py-1 bg-blue-500 text-white rounded mb-4"
+                  >
+                    Search
+                  </button>
+                  <div>
+                    {googleResults && googleResults.length > 0 ? (
+                      <div className="grid grid-cols-2 gap-2">
+                        {googleResults.map((result) => (
+                          <div key={result.link} className="border p-1">
+                            <img src={result.link} alt={result.title} className="w-full h-auto" />
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <p>No results found.</p>
+                    )}
+                  </div>
+                  <p className="text-sm text-gray-500 mt-2">
+                    Results are filtered for images that are free for reuse.
+                  </p>
+                </div>
+              )}
+
+              {showUnsplashPanel && (
+                <div className="w-1/3 border-l border-gray-300 p-4 overflow-y-auto" style={{ maxHeight: "100%" }}>
+                  <h3 className="text-lg font-semibold mb-2">Unsplash Stock Images</h3>
+                  <input
+                    type="text"
+                    placeholder="Enter search query..."
+                    className="border p-1 w-full mb-2"
+                    value={unsplashQuery}
+                    onChange={(e) => setUnsplashQuery(e.target.value)}
+                  />
+                  <button
+                    onClick={searchUnsplashImages}
+                    className="px-3 py-1 bg-blue-500 text-white rounded mb-4"
+                  >
+                    Search
+                  </button>
+                  <div>
+                    {unsplashResults && unsplashResults.length > 0 ? (
+                      <div className="grid grid-cols-2 gap-2">
+                        {unsplashResults.map((photo) => (
+                          <div key={photo.id} className="border p-1">
+                            <img
+                              src={photo.urls.small}
+                              alt={photo.description || "Unsplash Image"}
+                              className="w-full h-auto"
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <p>No results found.</p>
+                    )}
+                  </div>
+                  <p className="text-sm text-gray-500 mt-2">
+                    Make sure to attribute the photographer as required by Unsplash.
+                  </p>
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>

@@ -97,7 +97,7 @@ export default function Nav() {
           </Link>
         </li>
         <li>
-          <Link to="/Projects" className="hover:text-yellow-400 transition-colors">
+          <Link to="/uplift" className="hover:text-yellow-400 transition-colors">
             Uplift
           </Link>
         </li>

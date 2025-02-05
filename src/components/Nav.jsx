@@ -82,7 +82,7 @@ export default function Nav() {
             to="/moodboard"
             className="hover:text-yellow-400 transition-colors"
           >
-            Moodboard
+            Canvas
           </Link>
         </li>
         <li>
@@ -90,22 +90,27 @@ export default function Nav() {
             to="/notebook"
             className="hover:text-yellow-400 transition-colors"
           >
-            Notebook
+            Journal
           </Link>
         </li>
         <li>
           <Link to="/Calendar" className="hover:text-yellow-400 transition-colors">
-            Calendar
+            Workflow
           </Link>
         </li>
         <li>
           <Link to="/Projects" className="hover:text-yellow-400 transition-colors">
-            Project
+            Workspace
+          </Link>
+        </li>
+        <li>
+          <Link to="/Projects" className="hover:text-yellow-400 transition-colors">
+            Uplift
           </Link>
         </li>
         <div className="flex items-center space-x-4">
           <Link to="/membership">
-            <h1 className="text-white">Plans</h1>
+            <h1 className="text-white">Pricing</h1>
           </Link>
           <h1 className="text-white">{userInfo?.name}</h1>
           <button
